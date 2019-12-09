@@ -19,17 +19,21 @@ void main(List<String> arguments) {
         var pixels = layer.group(1).split('');
         var pos = 0;
         for (var y = 0; y< 6; y++) {
+          // setup (layer 1 only)
           if(image.isEmpty ||  image.length < y+1) {
             image.add([]);
           }
           for (var i = pos; i < pos+25; i++) {
+            // setup layer 1 (ggrrr at dart)
             if(image[y].length < i-pos+1) {
               image[y].add(int.parse(pixels[i]));
             }
-            if(int.parse(pixels[i]) !=2 && image[y][i-pos] == '2') {
+            // replace lower layers if we can see through to a 0 or a 1
+            if(int.parse(pixels[i]) !=2 && image[y][i-pos] == 2) {
               image[y][i-pos] = int.parse(pixels[i]);
             }
           }
+          // next row in layer
           pos += 25;
         }
 //        print(image);
@@ -43,9 +47,9 @@ void main(List<String> arguments) {
         for (var x in y) {
           //print(x);
           if(x == 0) {
-            line += '*';
+            line += ' ';
           } else if(x == 1) {
-            line += 'o';
+            line += 'X';
           } else {
             line += ' ';
           }
