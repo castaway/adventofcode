@@ -51,7 +51,7 @@ Map<String,int> handle(List<int> nums, List<int> inputs, [int iJump = 0]) {
   // Operation is the first value in each program
   // Ops were all length 4 in day 2, now length varies
   // Opcode value length also varies: could be 4 (1101 etc), 1 or 2 (99)
-  Map<int,int> opLengths = {1:4,2:4,3:2,4:2,5:3,6:3,7:4,8:4,99:0};
+  Map<int,int> opLengths = {1:4,2:4,3:2,4:2,5:3,6:3,7:4,8:4,9:2,99:0};
   int op=0;
   int opLen;
   int i=iJump;
