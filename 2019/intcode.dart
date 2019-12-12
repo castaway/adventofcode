@@ -5,12 +5,15 @@ class Intcode {
   // mode 2's relative base
   int relativeBase;
 
-  Intcode(this.nums, this.inputs, [this.relativeBase = 0, this.iJump = 0]);
+  Intcode(this.nums, [this.inputs, this.relativeBase = 0, this.iJump = 0]);
 
-  Map<String,int> handle() {
+  Map<String,int> handle(List<int> _inputs, [int _iJump = 0]) {
+    inputs = [..._inputs];
+    iJump = _iJump ?? 0;
     // ugly hack: dart doesn't have unshift, only removeLast (pop)
     inputs = inputs.reversed.toList();
     print('INPUTS: $inputs');
+    print('iJump: $iJump');
     // Operation is the first value in each program
     // Ops were all length 4 in day 2, now length varies
     // Opcode value length also varies: could be 4 (1101 etc), 1 or 2 (99)
@@ -123,6 +126,8 @@ class Intcode {
       i = iJump;
       print('Next i: $i');
     }
+
+    return {'output':-1};
   }
 
   int numWithMode(int value, int mode) {
@@ -153,6 +158,9 @@ class Intcode {
   }
 
   int getValue(int location) {
+    if(location+1 > nums.length) {
+      nums.length = location+1;
+    }
     if(nums[location] == null) {
       return 0;
     } else {
