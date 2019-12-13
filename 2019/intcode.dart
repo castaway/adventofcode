@@ -129,7 +129,7 @@ class Intcode {
       print('Next i: $i');
     }
 
-    return {'output':-1};
+    return {'output': null};
   }
 
   int numWithMode(int value, int mode) {
