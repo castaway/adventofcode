@@ -7,9 +7,11 @@ class Intcode {
 
   Intcode(this.nums, [this.inputs, this.relativeBase = 0, this.iJump = 0]);
 
-  Map<String,int> handle(List<int> _inputs, [int _iJump = 0]) {
+//  Map<String,int> handle() {
+  Map<String,int> handle(List<int> _inputs, [int _iJump = 0, int _relativeBase = 0]) {
     inputs = [..._inputs];
     iJump = _iJump ?? 0;
+    relativeBase =  _relativeBase ?? 0;
     // ugly hack: dart doesn't have unshift, only removeLast (pop)
     inputs = inputs.reversed.toList();
     print('INPUTS: $inputs');
@@ -77,7 +79,7 @@ class Intcode {
         var out = getValue(i+1);
         var output = numWithMode(out, opModes[1]);
         print('OUTPUT: $output');
-        return {'output':output, 'iJump': iJump};
+        return {'output':output, 'iJump': iJump, 'relativeBase': relativeBase};
       }
       // 5 = jump if param non-zero
       if(op == 5) {
