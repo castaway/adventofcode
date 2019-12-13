@@ -24,17 +24,21 @@ void main(List<String> arguments) {
       List<int> inputs = [0];
       int loopCount = 0;
       do {
-        output = intcodeComputer.handle([hull['$x,$y'] ?? 0], output['iJump'] ?? 0);
+        output = intcodeComputer.handle([hull['$x,$y'] ?? 0], output['iJump'] ?? 0, output['relativeBase'] ?? 0);
+        if(output['output'] == null) break;
         if(output['output'] == 1) {
           hull['$x,$y'] = 1;
         } else if(output['output'] == 0) {
           hull['$x,$y'] = 0;
         }
-        output = intcodeComputer.handle([], output['iJump']);
+        output = intcodeComputer.handle([], output['iJump'], output['relativeBase'] ?? 0);
         if(output['output'] == 1) {
           dir = dir < 3 ? dir+1 : 0;
         } else if(output['output'] == 0) {
           dir = dir > 1 ? dir-1 : 3;
+        } else {
+          print('Unknown output: ${output['output']}');
+          break;
         }
         if(dir == 0) {
           y+=1;
@@ -48,9 +52,9 @@ void main(List<String> arguments) {
           print('Dir $dir unknown!');
         }
         print('x; $x, y: $y, dir: $dir');
-      } while (loopCount++ <= 5 || output['output'] != -1);
+      } while (output['output'] != null);
     },
-    onDone: () { print(hull.keys.length); },
+    onDone: () { print(hull.values.where((val) => val == 1).length); },
     onError: (e) { print(e.toString()); }
   );
 }
