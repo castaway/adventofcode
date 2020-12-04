@@ -7,15 +7,13 @@ class Intcode {
 
   Intcode(this.nums, [this.inputs, this.relativeBase = 0, this.iJump = 0]);
 
-//  Map<String,int> handle() {
-  Map<String,int> handle(List<int> _inputs, [int _iJump = 0, int _relativeBase = 0]) {
+  Map<String,int> handle(List<int> _inputs, [int _iJump = 0]) {
     inputs = [..._inputs];
     iJump = _iJump ?? 0;
-    relativeBase =  _relativeBase ?? 0;
     // ugly hack: dart doesn't have unshift, only removeLast (pop)
     inputs = inputs.reversed.toList();
     print('INPUTS: $inputs');
-//    print('iJump: $iJump');
+    print('iJump: $iJump');
     // Operation is the first value in each program
     // Ops were all length 4 in day 2, now length varies
     // Opcode value length also varies: could be 4 (1101 etc), 1 or 2 (99)
@@ -35,7 +33,7 @@ class Intcode {
       }
       opLen = opLengths[op];
       int iJump = i+opLen;
- //     print('original: ${nums.sublist(i,i+opLen)}');
+      print('original: ${nums.sublist(i,i+opLen)}');
       // opmodes are reversed: last position is the mode of the first op parameter etc
       // Add 0 for the opcode (just makes the mode param args match the op param args later)
       opWithModes.add(0);
@@ -78,8 +76,8 @@ class Intcode {
       if(op == 4) {
         var out = getValue(i+1);
         var output = numWithMode(out, opModes[1]);
-//        print('OUTPUT: $output');
-        return {'output':output, 'iJump': iJump, 'relativeBase': relativeBase};
+        print('OUTPUT: $output');
+        return {'output':output, 'iJump': iJump};
       }
       // 5 = jump if param non-zero
       if(op == 5) {
@@ -124,13 +122,12 @@ class Intcode {
         var arg1 = getValue(i+1);
         var modedArg = numWithMode(arg1, opModes[1]);
         relativeBase += modedArg;
-//        print('relBase: $relativeBase');
       }
       i = iJump;
-//      print('Next i: $i');
+      print('Next i: $i');
     }
 
-    return {'output': null};
+    return {'output':-1};
   }
 
   int numWithMode(int value, int mode) {
@@ -142,7 +139,7 @@ class Intcode {
       return value;
     } else if(mode == 2) {
       // relative mode
-      //print('Get value at ${relativeBase + value}');
+      print('Get value at ${relativeBase + value}');
       return getValue(relativeBase + value);
     } else {
       print('No such mode: $mode');
@@ -154,7 +151,6 @@ class Intcode {
     if(mode == 2) {
       location += relativeBase;
     }
-//    print('Write: Location: $location, Value: $value');
     if(location+1 > nums.length) {
       nums.length = location+1;
     }

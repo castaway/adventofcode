@@ -1,0 +1,8 @@
+name: adventofcode2019
+
+environment:
+  sdk: '>=2.4.0 <3.0.0'
+
+dependencies:
+  trotter: ^1.0.2
+  dart_math: ^0.0.9+4

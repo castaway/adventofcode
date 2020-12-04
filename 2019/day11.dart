@@ -62,11 +62,11 @@ void main(List<String> arguments) {
     onDone: () {
       print('min,max: $minx,$miny $maxx,$maxy');
       print(hull.keys.length);
-      for(var i=miny; i< maxy; i++) {
+      for(var i=miny; i<= maxy; i++) {
         var line = '';
-        for(var j=minx; j < maxx; j++) {
-          line += hull['$i,$j'] != null && hull['$i,$j'] == 1
-          ? hull['$i,$j'].toString() : ' ';
+        for(var j=minx; j <= maxx; j++) {
+          line += hull['$j,$i'] != null && hull['$j,$i'] == 1
+          ? hull['$j,$i'].toString() : ' ';
         }
         print(line);
       }

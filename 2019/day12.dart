@@ -18,7 +18,7 @@ void main(List<String> arguments) {
       moons.add({'x': int.parse(match.group(1)), 'y':int.parse(match.group(2)), 'z':int.parse(match.group(3))});
     },
     onDone: () {
-      var energy = applyGravityAndMove(moons, 1000);
+      var energy = applyGravityAndMove(moons, 100);
       print(moons);
       print(energy);
     },
@@ -48,8 +48,8 @@ int applyGravityAndMove(List<Map<String,int>> start, iterations) {
       start[j]['y'] += vels[j]['y'];
       start[j]['z'] += vels[j]['z'];
     }
-    print('moons: $start');
-    print('velocities: $vels');
+    print('$i, moons: $start');
+    print('$i, velocities: $vels');
   }
   // sum abs locations, multiply by sum of abs velocities
   int energy = 0;
