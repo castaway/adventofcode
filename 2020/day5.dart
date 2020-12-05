@@ -32,6 +32,17 @@ class Day5 {
   
   static whenDone() {
     print(seats);
-    print(seats.reduce((v1, v2) => v1 > v2 ? v1 : v2));
+    print('PART 1: ${seats.reduce((v1, v2) => v1 > v2 ? v1 : v2)}');
+    seats.sort();
+    //print(seats);
+    var seat = 822;
+    for(var s in seats.reversed) {
+      if(s == seat) {
+        seat--;
+      } else {
+        print('PART 2: ${s+1}');
+        break;
+      }
+    }
   }
 }
