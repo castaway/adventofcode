@@ -1,2 +1,2 @@
 language = "dart"
-run = "dart main.dart"
+run = "pub get;dart main.dart"

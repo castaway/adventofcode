@@ -1,0 +1,4 @@
+name: adventofcode
+dependencies:
+  trotter: ^1.1.0
+  
