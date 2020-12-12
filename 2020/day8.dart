@@ -45,6 +45,8 @@ class Day8 {
       oldPos = {};
       oldValue = 0;
       newPosition = 0;
+      currentPosition = 0;
+      currentValue = 0;
       while(!oldPos.containsKey(newPosition)) {
         oldValue = currentValue;
         oldPos[currentPosition] = true;
@@ -58,6 +60,11 @@ class Day8 {
 
   // Can we predefine a Map with instructions -> functions?
 
+  // globals:
+  // currentPosition
+  // currentInstruction
+  // currentValue
+  // 
   static runProgram(List<MapEntry> currentProgram) {
     if(currentPosition >= currentProgram.length) {
       return currentPosition;
