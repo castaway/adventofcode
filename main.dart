@@ -13,19 +13,20 @@ import './2020/day9.dart';
 import './2020/day10.dart';
 import './2020/day11.dart';
 import './2020/day12.dart';
+import './2020/day13.dart';
 
 void main(List<String> arguments) {
   
-  var filename = Day12.dayFile; // arguments[0];
+  var filename = Day13.dayFile; // arguments[0];
   File inputFile = new File(filename);
   Stream<List<int>> inputStream = inputFile.openRead();
   inputStream
   .transform(utf8.decoder)
   .transform(new LineSplitter())
   .listen((String line) {
-    Day12.handle(line);
+    Day13.handle(line);
     },
-    onDone: () { Day12.whenDone(); },
+    onDone: () { Day13.whenDone(); },
     onError: (e) { print(e.toString()); }
   );
 //  print(total);
