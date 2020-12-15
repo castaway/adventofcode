@@ -1,5 +1,5 @@
 name: adventofcode
 dependencies:
   trotter: ^1.1.0
-  binary: ^2.0.0
+  # binary: ^2.0.0
   
