@@ -25,12 +25,12 @@ class Day15 {
     }
     // print(numbers);
     print('PART 1: $lastNum');
-    /*
+    
     for(var i = nextIt+1; i <  30000000; i++) {
       iterate(i);
       //print('$i, $lastNum');
     }
-    */
+    
     print('PART 2: $lastNum');
   }
 
