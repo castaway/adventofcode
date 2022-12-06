@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
-import './2022/day5.dart';
+import './2022/day6.dart';
 
 void main(List<String> arguments) {
   

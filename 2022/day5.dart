@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Advent {
   static const dayFile = '2022/day5.txt';
   static List<List<int>> instructions = [];
@@ -54,9 +56,10 @@ class Advent {
   static whenDone() {
     print(positions);
     //print(crateData);
-    print(crates);
+    //print(crates);
     // print(instructions);
 
+    var cratesP2 = jsonDecode(jsonEncode(crates));
     for(var instr in instructions) {
       print(instr);
       for(var i = 0; i < instr[0]; i++) {
@@ -65,10 +68,22 @@ class Advent {
         // print(crates);
       }
     }
-    print(crates);
+    //print(crates);
+    print(cratesP2);
     var tops = crates.map((ele) => ele.length > 0 ? ele[0] : '').join('');
+    for(var instr in instructions) {
+      print(instr);
+        var toMove = cratesP2[instr[1]].sublist(0, instr[0]);
+        print(toMove);
+        cratesP2[instr[1]].removeRange(0, instr[0]);
+        cratesP2[instr[2]].insertAll(0, toMove);
+        print(cratesP2);
+    }
+    
+    print(cratesP2);
+    var topsP2 = cratesP2.map((ele) => ele.length > 0 ? ele[0] : '').join('');
     print('Part 1: $tops');
-//    print('Part 2: $overlaps');
+    print('Part 2: $topsP2');
 
   }
 }
