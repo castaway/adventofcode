@@ -13,7 +13,7 @@ class Advent {
 
   static whenDone() {
     var p1 = 0;
-    print(input);
+    //print(input);
     var locations = {'H': [0,0], 'T': [0,0]};
     // longer rope:
     for (var x = 1; x <=9; x++) {
@@ -21,6 +21,8 @@ class Advent {
     }
     var visited = Set();
     visited.add('0:0');
+    var visited9 = Set();
+    visited9.add('0:0');
     for(var instrs in input) {
       switch(instrs[0]) {
         case 'U':
@@ -29,9 +31,12 @@ class Advent {
             // H moves
             locations['H'][1] += 1;
             // T follows
-            var changeT = goTo(locations);
-            locations['T'][0] += changeT[0];
-            locations['T'][1] += changeT[1];
+            goTo(locations, 'H', 'T');
+            goTo(locations, 'H', '1');
+            for (var x = 2; x <= 9; x++) {
+               goTo(locations, (x-1).toString(), x.toString());
+            }
+            visited9.add('${locations['9'][0]}:${locations['9'][1]}');
             //print('U: loc: $locations');
             visited.add('${locations['T'][0]}:${locations['T'][1]}');
           }
@@ -42,9 +47,12 @@ class Advent {
             // H moves
             locations['H'][1] -= 1;
             // T follows
-            var changeT = goTo(locations);
-            locations['T'][0] += changeT[0];
-            locations['T'][1] += changeT[1];
+            goTo(locations, 'H', 'T');
+            goTo(locations, 'H', '1');
+            for (var x = 2; x <= 9; x++) {
+               goTo(locations, (x-1).toString(), x.toString());
+            }
+            visited9.add('${locations['9'][0]}:${locations['9'][1]}');
             //print('D: loc: $locations');
             visited.add('${locations['T'][0]}:${locations['T'][1]}');
           }
@@ -55,9 +63,12 @@ class Advent {
             // H moves
             locations['H'][0] += 1;
             // T follows
-            var changeT = goTo(locations);
-            locations['T'][0] += changeT[0];
-            locations['T'][1] += changeT[1];
+            goTo(locations, 'H', 'T');
+            goTo(locations, 'H', '1');
+            for (var x = 2; x <= 9; x++) {
+               goTo(locations, (x-1).toString(), x.toString());
+            }
+            visited9.add('${locations['9'][0]}:${locations['9'][1]}');
             //print('R: loc: $locations');
             visited.add('${locations['T'][0]}:${locations['T'][1]}');
           }
@@ -68,9 +79,12 @@ class Advent {
             // H moves
             locations['H'][0] -= 1;
             // T follows
-            var changeT = goTo(locations);
-            locations['T'][0] += changeT[0];
-            locations['T'][1] += changeT[1];
+            goTo(locations, 'H', 'T');
+            goTo(locations, 'H', '1');
+            for (var x = 2; x <= 9; x++) {
+               goTo(locations, (x-1).toString(), x.toString());
+            }
+            visited9.add('${locations['9'][0]}:${locations['9'][1]}');
             //print('L: loc: $locations');
             visited.add('${locations['T'][0]}:${locations['T'][1]}');
           }
@@ -83,47 +97,48 @@ class Advent {
     // print(visited);
 
     print('Part 1: ${visited.length}');
-    // print('Part 2: ${p2.first}');
+    print('Part 2: ${visited9.length}');
 
   }
 }
-  List<int> goTo(locs) {
+  goTo(locs, K1, K2) {
     List<int> move = [0,0];
-    if(locs['T'][0] ==  locs['H'][0] + 2
-      && locs['T'][1] == locs['H'][1]) {
+    if(locs[K2][0] ==  locs[K1][0] + 2
+      && locs[K2][1] == locs[K1][1]) {
       move[0] = -1;
     }
-    if(locs['T'][0] ==  locs['H'][0] - 2
-      && locs['T'][1] == locs['H'][1]) {
+    if(locs[K2][0] ==  locs[K1][0] - 2
+      && locs[K2][1] == locs[K1][1]) {
       move[0] = 1;
     }
-    if(locs['T'][1] ==  locs['H'][1] + 2
-      && locs['T'][0] == locs['H'][0]) {
+    if(locs[K2][1] ==  locs[K1][1] + 2
+      && locs[K2][0] == locs[K1][0]) {
       move[1] = -1;
     }
-    if(locs['T'][1] ==  locs['H'][1] - 2
-      && locs['T'][0] == locs['H'][0]) {
+    if(locs[K2][1] ==  locs[K1][1] - 2
+      && locs[K2][0] == locs[K1][0]) {
       move[1] = 1;
     }
     //print('goTo 1: Moved $move');
     // arent touching or in same row/column
-    //print('Cond 1: ${(locs["T"][0] - locs['H'][0]).abs() + (locs['T'][1] - locs['H'][1]).abs()}');
-    //print('Cond 2: ${locs['T'][0] != locs['H'][0] && locs['T'][1] != locs['H'][1]}');
-    if((locs['T'][0] - locs['H'][0]).abs() + (locs['T'][1] - locs['H'][1]).abs() > 2 &&
-      locs['T'][0] != locs['H'][0] && locs['T'][1] != locs['H'][1]) {
-      if(locs['T'][0] >  locs['H'][0]) {
+    //print('Cond 1: ${(locs["T"][0] - locs[K1][0]).abs() + (locs[K2][1] - locs[K1][1]).abs()}');
+    //print('Cond 2: ${locs[K2][0] != locs[K1][0] && locs[K2][1] != locs[K1][1]}');
+    if((locs[K2][0] - locs[K1][0]).abs() + (locs[K2][1] - locs[K1][1]).abs() > 2 &&
+      locs[K2][0] != locs[K1][0] && locs[K2][1] != locs[K1][1]) {
+      if(locs[K2][0] >  locs[K1][0]) {
         move[0] = -1;
       }
-      if(locs['T'][0] < locs['H'][0]) {
+      if(locs[K2][0] < locs[K1][0]) {
         move[0] = 1;
       }
-      if(locs['T'][1] >  locs['H'][1]) {
+      if(locs[K2][1] >  locs[K1][1]) {
         move[1] = -1;
       }
-      if(locs['T'][1] <  locs['H'][1]) {
+      if(locs[K2][1] <  locs[K1][1]) {
         move[1] = 1;
       }      
       //print('goTo 2: Moved $move');
     }
-    return move;
+    locs[K2][0] += move[0];
+    locs[K2][1] += move[1];
   }
