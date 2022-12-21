@@ -27,7 +27,8 @@ class Advent {
         coords['$x:${pairList[p][1]}'] = '#';
         // print(coords);
       }
-      for (var y = pairList[p][1]; 
+      for (var y = pairList[p][1];
+           // Ascending / descending
            pairList[p][1] < pairList[p+1][1] ? y < pairList[p+1][1] : y > pairList[p+1][1];
            pairList[p][1] < pairList[p+1][1] ? y++ : y--) {
         //print('y: $y');
