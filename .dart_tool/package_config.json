@@ -1,0 +1,20 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "trotter",
+      "rootUri": "file:///home/runner/.pub-cache/hosted/pub.dartlang.org/trotter-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "adventofcode",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.10"
+    }
+  ],
+  "generated": "2023-12-01T12:51:59.374291Z",
+  "generator": "pub",
+  "generatorVersion": "2.14.3"
+}

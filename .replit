@@ -1,2 +1,2 @@
-language = "dart"
 run = "pub get;dart main.dart"
+entrypoint = "main.sh"

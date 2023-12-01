@@ -1,4 +1,8 @@
 name: adventofcode
+
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+
 dependencies:
   trotter: ^1.1.0
   # binary: ^2.0.0
