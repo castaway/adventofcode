@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
-import './2023/day1.dart';
+import 'dart:math';
+import './2023/day4.dart';
 
 void main(List<String> arguments) {
   
