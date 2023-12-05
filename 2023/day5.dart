@@ -1,10 +1,11 @@
 import 'dart:math';
 class Advent {
-  static const dayFile = '2023/day5_test.txt';
+  static const dayFile = '2023/day5.txt';
   static List<int> seeds = [];
   static List<String> maps = [];
   static Map<String,List<Map<String, int>>> mappings = {};
   static String mapType = '';
+  static Map<int,int> cache = {};
 
   static handle(String line) {
     //print('INPUT: $line, ${line.length}');
@@ -19,7 +20,7 @@ class Advent {
       print('It matches');
       final sMatch = seedsRE.firstMatch(line);
       seeds.addAll(sMatch[1].split(RegExp(r' ')).map((s) => int.parse(s)).toList());
-      print(seeds);
+      //print(seeds);
       maps.add('seeds');
       return;
     }
@@ -45,7 +46,7 @@ class Advent {
         'start': int.parse(rMatch[2]),
         'range': int.parse(rMatch[3])
         });
-      print(mappings);
+      //print(mappings);
     }
   }
 
@@ -62,27 +63,59 @@ class Advent {
     // lowest location needed.. ?
     // loop over seeds, and maps:
     for(var seed in seeds) {
-      var currentVal = seed;
-      for(var c=0; c < maps.length - 1; c++) {
-        var category = maps[c];
-        final mapping = mappings[category];
-        var matched = false;
-        for(var range in mapping) {
-          // if in range convert, else keep value
-          //print("Checking: $currentVal, ${range['start']}, ${range['range']}");
-          if(!matched && currentVal >= range['start'] && currentVal <= range['start'] + range['range'] - 1) {
-            currentVal = range['next'] + currentVal - range['start'];
-            matched = true;
-            //print("Yes $currentVal");
-          }
-        }
-        print("From: $seed to ${maps[c+1]} is $currentVal");
-      }
+      var currentVal = seed_to_location(seed, maps, mappings);
       locations.add(currentVal);
     }
-    var lowest = locations.reduce((val, ele) => ele < val ? ele : val);
-    print("Part 1: $lowest");
-    //print("Part 2: $cardTotal");
+    var lowest1 = locations.reduce((val, ele) => ele < val ? ele : val);
+
+    // P2 seeds are a range, eg 79 - 79+13, 55 - 55 + 12
+    var lowest2 = 999999999;
+    for(var seedindx = 0; seedindx < seeds.length -1; seedindx += 2) {
+      //seeds2.addAll(List.generate(seeds[seedindx+1], (int index) => index + seeds[seedindx], growable: true));
+
+      for(var i = 0; i < seeds[seedindx+1]; i++) {
+        var seed = seeds[seedindx] + i;
+        //if(cache.containsKey(seed)) {
+        //  return cache[seed];
+        //}
+        var currentVal = seed_to_location(seed, maps, mappings);
+        //cache[seed] = currentVal;
+        if(currentVal < lowest2) {
+          lowest2 = currentVal;
+        }
+      }
+    }
+    // for(var seed in seeds2) {
+    //   if(cache.containsKey(seed)) {
+    //     return cache[seed];
+    //   }
+    //   var currentVal = seed_to_location(seed, maps, mappings);
+    //   cache[seed] = currentVal;
+    //   locations.add(currentVal);
+    // }
+    print("Part 1: $lowest1");
+    //var lowest2 = locations.reduce((val, ele) => ele < val ? ele : val);
+    print("Part 2: $lowest2");
 
   }
 }
+  seed_to_location(currentVal, maps, mappings) {
+    final seed = currentVal;
+    for(var c=0; c < maps.length - 1; c++) {
+      var category = maps[c];
+      final mapping = mappings[category];
+      var matched = false;
+      for(var range in mapping) {
+        // if in range convert, else keep value
+        //print("Checking: $currentVal, ${range['start']}, ${range['range']}");
+        if(!matched && currentVal >= range['start'] && currentVal <= range['start'] + range['range'] - 1) {
+          currentVal = range['next'] + currentVal - range['start'];
+          matched = true;
+          //print("Yes $currentVal");
+        }
+      }
+      print("From: $seed to ${maps[c+1]} is $currentVal");
+    }
+    return currentVal;
+  }
+
