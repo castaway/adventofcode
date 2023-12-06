@@ -1,6 +1,6 @@
 import 'dart:math';
 class Advent {
-  static const dayFile = '2023/day6_test.txt';
+  static const dayFile = '2023/day6.txt';
   static List<Map<String,dynamic>> races = [];
   static int rTime;
   static int rDistance;
@@ -33,16 +33,16 @@ class Advent {
     List<int> countSolutions = [];
     for (var r in races) {
       r['solutions'] = <int>[];
-      for(var dist = r['Distance']+1; dist < 2*r['Distance']; dist++) {
-        for(var t = 1; t < r['Time']; t++) {
-          if(dist % t != 0) {
-            continue;
-          }
-          if(dist / t  == r['Time'] - t) {
-            r['solutions'].add(r['Time'] - t);
-          }
+      //for(var dist = r['Distance']+1; dist < 2*r['Distance']; dist++) {
+        var halfTime = (r['Time'] / 2).toInt();
+        // start in the middle of the time, increment while distance is greater
+        for(var t = halfTime; t * (r['Time'] - t) > r['Distance']; t++) {
+          r['solutions'].add(t);
         }
-      }
+        for(var t = halfTime - 1; t * (r['Time'] - t) > r['Distance']; t--) {
+          r['solutions'].add(t);
+        }
+      //}
       countSolutions.add(r['solutions'].length);
       //print(races);
     }
@@ -52,19 +52,15 @@ class Advent {
 
     // P2, rTime, rDistance
     List<int> rSolutions = [];
-    for(var dist = rDistance+1; dist < 2*rDistance; dist++) {
-      print(dist);
-      for(var t = 1; t < rTime; t++) {
-        if(dist % t != 0) {
-          continue;
-        }
-        if(dist / t  == rTime - t) {
-          rSolutions.add(rTime - t);
-        }
-      }
+    var halfTime = (rTime / 2).toInt();
+    // start in the middle of the time, increment while distance is greater
+    for(var t = halfTime; t * (rTime - t) > rDistance; t++) {
+      rSolutions.add(t);
     }
-
-    print(rSolutions);
+    for(var t = halfTime - 1; t * (rTime - t) > rDistance; t--) {
+      rSolutions.add(t);
+    }
+    //print(rSolutions);
 
     print("Part 1: $total");
     //var lowest2 = locations.reduce((val, ele) => ele < val ? ele : val);
