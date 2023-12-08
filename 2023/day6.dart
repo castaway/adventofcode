@@ -33,7 +33,6 @@ class Advent {
     List<int> countSolutions = [];
     for (var r in races) {
       r['solutions'] = <int>[];
-      //for(var dist = r['Distance']+1; dist < 2*r['Distance']; dist++) {
         var halfTime = (r['Time'] / 2).toInt();
         // start in the middle of the time, increment while distance is greater
         for(var t = halfTime; t * (r['Time'] - t) > r['Distance']; t++) {
@@ -42,7 +41,6 @@ class Advent {
         for(var t = halfTime - 1; t * (r['Time'] - t) > r['Distance']; t--) {
           r['solutions'].add(t);
         }
-      //}
       countSolutions.add(r['solutions'].length);
       //print(races);
     }
@@ -63,7 +61,6 @@ class Advent {
     //print(rSolutions);
 
     print("Part 1: $total");
-    //var lowest2 = locations.reduce((val, ele) => ele < val ? ele : val);
     print("Part 2: ${rSolutions.length}");
 
   }

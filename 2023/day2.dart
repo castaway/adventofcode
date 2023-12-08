@@ -36,6 +36,8 @@ class Advent {
     // What is the sum of the IDs of those games?
     var total = 0;
     var possible = [0];
+    var minCubes = [];
+    var minPowers = [];
     for(final game in inputs) {
       if(game['cubes'].every((s) => (s.containsKey('red') ? s['red'] <= red : true) &&
                              (s.containsKey('blue') ? s['blue'] <= blue : true) &&
@@ -43,10 +45,29 @@ class Advent {
         print("Game ${game['id']} wins");
          possible.add(game['id']);
       }
+
+      minCubes.add({'red':0, 'blue':0, 'green':0});
+      game['cubes'].forEach((cubes) {
+      if(cubes.containsKey('red') && cubes['red'] > minCubes.last['red']) {
+        minCubes.last['red'] = cubes['red'];
+      }
+        
+      if(cubes.containsKey('blue') && cubes['blue'] > minCubes.last['blue']) {
+        minCubes.last['blue'] = cubes['blue'];
+      }
+        
+      if(cubes.containsKey('green') && cubes['green'] > minCubes.last['green']) {
+        minCubes.last['green'] = cubes['green'];
+      }
+      });
+      print(minCubes.last);
+      minPowers.add(minCubes.last['red'] * minCubes.last['blue'] * minCubes.last['green']);
     }
     total = possible.reduce((val,ele) => val + ele);
+    // P2 - minimum per colour to make the games work (aka max of each colour listed)
+    var sumPowers = minPowers.reduce((val, ele) => val + ele);    
     print("Part 1: $total");
-    // print("Part 2: $val2");
+    print("Part 2: $sumPowers");
 
   }
 }
