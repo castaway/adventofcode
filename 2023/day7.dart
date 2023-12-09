@@ -1,8 +1,8 @@
 import 'dart:math';
 class Advent {
-  static const dayFile = '2023/day7_test.txt';
+  static const dayFile = '2023/day7.txt';
   static List<Map<String,dynamic>> hands = [];
-  static List<String> ranks = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+  static List<String> ranks = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
 
   static handle(String line) {
     //print('INPUT: $line, ${line.length}');
@@ -58,14 +58,23 @@ class Advent {
         hand['type'] = 7;
       }
     }
-    print(hands);
+    for(var h in hands) print(h);
 
     // Sort whole thing by strength
-    hands.sort((a,b) => a['type'].compareTo(b['type']) 
-              || ranks.indexOf(a['cards'][0]).compareTo(ranks.indexOf(b['cards'][0])));
-
-    print(hands);
-    //print("Part 1: $total");
+    hands.sort((a,b) {
+      int cmp = a['type'].compareTo(b['type']);
+      if (cmp != 0) return cmp;
+      return ranks.indexOf(a['cards'][0]).compareTo(ranks.indexOf(b['cards'][0]));
+    });
+    print('---');
+    for(var h in hands.reversed) print(h);
+    var total = 0;
+    hands = hands.reversed.toList();
+    for(var i = 0; i < hands.length; i++) {
+      print("Rank: ${i+1}, ${hands[i]['hand']}, ${hands[i]['type']}, ${hands[i]['bid']}");
+      total += (i+1) * int.parse(hands[i]['bid']);
+    }
+    print("Part 1: $total");
     //print("Part 2: ${rSolutions.length}");
 
   }
